@@ -1,0 +1,15 @@
+move_group:
+  ros__parameters:
+    moveit_simple_controller_manager:
+      controller_names:
+        - denso_joint_trajectory_controller
+
+      denso_joint_trajectory_controller:
+        action_ns: follow_joint_trajectory
+        type: FollowJointTrajectory
+        default: true
+        joints:
+          - joint_1
+          - joint_2
+          - joint_3
+          - joint_4

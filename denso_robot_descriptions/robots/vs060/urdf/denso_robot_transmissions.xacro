@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <!--
+    NOTE the macro defined in this file is NOT part of the public API of this
+          package. Users CANNOT rely on this file being available, or stored in
+          this location. Nor can they rely on the existence of the macro.
+  -->
+
+  <xacro:macro name="denso_robot_arm_transmission" params="namespace hw_interface">
+
+    <transmission name="${namespace}trans_1">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${namespace}joint_1">
+        <hardwareInterface>${hw_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${namespace}motor_1">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${namespace}trans_2">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${namespace}joint_2">
+        <hardwareInterface>${hw_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${namespace}motor_2">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${namespace}trans_3">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${namespace}joint_3">
+        <hardwareInterface>${hw_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${namespace}motor_3">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${namespace}trans_4">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${namespace}joint_4">
+        <hardwareInterface>${hw_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${namespace}motor_4">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${namespace}trans_5">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${namespace}joint_5">
+        <hardwareInterface>${hw_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${namespace}motor_5">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${namespace}trans_6">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${namespace}joint_6">
+        <hardwareInterface>${hw_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${namespace}motor_6">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+  </xacro:macro>
+
+</robot>

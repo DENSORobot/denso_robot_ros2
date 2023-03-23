@@ -1,0 +1,5 @@
+int32 func_id
+Variant[] vnt_args
+---
+int32 hresult
+Variant vnt_ret

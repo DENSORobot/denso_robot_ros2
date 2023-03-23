@@ -1,0 +1,34 @@
+move_group:
+  ros__parameters:
+    robot_description_planning:
+      joint_limits:
+        joint_1:
+          has_velocity_limits: true
+          max_velocity: 0.392699081698724
+          has_acceleration_limits: true
+          max_acceleration: 0.197335651876739
+        joint_2:
+          has_velocity_limits: true
+          max_velocity: 0.261799387799149
+          has_acceleration_limits: true
+          max_acceleration: 0.168446962097729
+        joint_3:
+          has_velocity_limits: true
+          max_velocity: 0.285832571599111
+          has_acceleration_limits: true
+          max_acceleration: 0.207088551736883
+        joint_4:
+          has_velocity_limits: true
+          max_velocity: 0.392699081698724
+          has_acceleration_limits: true
+          max_acceleration: 0.209664657712827
+        joint_5:
+          has_velocity_limits: true
+          max_velocity: 0.302168853397778
+          has_acceleration_limits: true
+          max_acceleration: 0.237228642589573
+        joint_6:
+          has_velocity_limits: true
+          max_velocity: 0.628318530717959
+          has_acceleration_limits: true
+          max_acceleration: 0.335103216382911

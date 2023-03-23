@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>denso_robot_control</name>
+  <version>1.1.0</version>
+  <description>The denso_robot_control package contains a MoveIt2 plugin for controlling DENSO robots.</description>
+  <maintainer email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</maintainer>
+  <license>MIT</license>
+  <author email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
+  <depend>rclcpp</depend>
+  
+  <depend>bcap_core</depend>
+  <depend>bcap_service</depend>
+  <depend>denso_robot_core</depend>
+  <depend>std_msgs</depend>
+  <depend>denso_robot_core_interfaces</depend>
+  <depend>bcap_service_interfaces</depend>
+
+  <exec_depend>controller_manager</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>

@@ -1,0 +1,9 @@
+<library path="denso_robot_control_plugin">
+  <class name="denso_robot_control/DensoRobotHW"
+         type="denso_robot_control::DensoRobotHW"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+		ROS2 Control System Driver for the Denso robots.
+    </description>
+  </class>
+</library>

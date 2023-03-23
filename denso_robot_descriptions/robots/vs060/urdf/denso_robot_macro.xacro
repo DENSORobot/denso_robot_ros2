@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <!--
+    Base Denso robot xacro macro.
+
+    NOTE this is NOT a URDF. It cannot directly be loaded by consumers
+    expecting a flattened '.urdf' file. See the top-level '.xacro' for that
+    (but note that .xacro must still be processed by the xacro command).
+
+    This file models the base kinematic chain of a Denso robot.
+
+    Author DENSO WAVE INCORPORATED
+  -->
+
+  <xacro:macro name="denso_robot" params="
+    model
+    namespace
+    transmission_hw_interface:=hardware_interface/PositionJointInterface
+    sim:=false
+    ip_address
+    send_format
+    recv_format
+    verbose:=false"
+  >
+
+    <!-- Robot data required by the denso driver -->
+    <xacro:arg name="ip_address" default="192.168.0.1"/>
+    <xacro:arg name="robot_name" default="VS060A3-AV6-NNN-NNN A"/> <!-- "robot_name" param must be consistent with the @TYPE_NAME variable of the real robot !! -->
+    <xacro:arg name="robot_joints" default="6"/> <!-- number of total joints in the kinematic chain -->
+    <xacro:arg name="joint_1" default="1"/> <!-- 0 = prismatic , 1 = revolute -->
+    <xacro:arg name="joint_2" default="1"/> <!-- 0 = prismatic , 1 = revolute -->
+    <xacro:arg name="joint_3" default="1"/> <!-- 0 = prismatic , 1 = revolute -->
+    <xacro:arg name="joint_4" default="1"/> <!-- 0 = prismatic , 1 = revolute -->
+    <xacro:arg name="joint_5" default="1"/> <!-- 0 = prismatic , 1 = revolute -->
+    <xacro:arg name="joint_6" default="1"/> <!-- 0 = prismatic , 1 = revolute -->
+    <xacro:arg name="controller_type" default="8"/> <!-- 8 = RC8 , 9 = RC9 -->
+    <xacro:arg name="arm_group" default="0"/>
+    <xacro:arg name="send_format" default="288"/>
+    <xacro:arg name="recv_format" default="292"/>
+    <xacro:arg name="verbose" default="false"/>
+
+    <xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot_transmissions.xacro" />
+    <!-- robot kinematics include -->
+    <xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot_kinematics.xacro" />
+    <!-- ros2 control include -->
+    <xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot.ros2_control.xacro" />
+    <!-- ros2 control instance -->
+    <xacro:denso_robot_ros2_control
+      name="GazeboSystem" namespace="$(arg namespace)"
+      sim="$(arg sim)"
+      model="$(arg model)"
+      ip_address="$(arg ip_address)"
+      robot_name="$(arg robot_name)"
+      robot_joints="$(arg robot_joints)"
+      joint_1="$(arg joint_1)"
+      joint_2="$(arg joint_2)"
+      joint_3="$(arg joint_3)"
+      joint_4="$(arg joint_4)"
+      joint_5="$(arg joint_5)"
+      joint_6="$(arg joint_6)"
+      arm_group="$(arg arm_group)"
+      controller_type="$(arg controller_type)"
+      verbose="$(arg verbose)"
+      send_format="$(arg send_format)"
+      recv_format="$(arg recv_format)" />
+
+    <!-- Add URDF transmission elements (for ros_control) -->
+    <xacro:denso_robot_arm_transmission namespace="$(arg namespace)" hw_interface="$(arg transmission_hw_interface)" />
+    <!-- Placeholder for ros2_control transmission which don't yet exist -->
+
+    <!-- links -  main serial chain -->
+    <xacro:denso_robot_arm_kinematics namespace="$(arg namespace)" model="$(arg model)" />
+
+    <gazebo>
+	    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      		<parameters>$(find denso_robot_moveit_config)/robots/$(arg model)/config/denso_robot_controllers.yaml</parameters>
+    	</plugin>
+  	</gazebo>
+
+
+  </xacro:macro>
+</robot>

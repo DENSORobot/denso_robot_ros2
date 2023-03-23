@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="denso_robot_ros2_control" params="name namespace
+	robot_name
+    sim:=false fake_sensor_commands:=false
+    ip_address
+    model
+    robot_joints joint_1 joint_2 joint_3 joint_4 joint_5 joint_6
+    arm_group
+    send_format recv_format
+	controller_type
+    verbose
+    ">
+
+    <ros2_control name="${namespace}${name}" type="system">
+	<!-- joint limits include -->
+	<xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot_joint_limits.xacro" />
+      <hardware>
+        <xacro:if value="${sim}">
+      	  <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </xacro:if>
+        <xacro:unless value="${sim}">
+          <plugin>denso_robot_control/DensoRobotHW</plugin>
+          <param name="ip_address">${ip_address}</param>
+<!-- "robot_name" param must be consistent with the @TYPE_NAME variable of the real robot !!  -->
+          <param name="robot_name">${robot_name}</param>
+          <param name="node_name">denso_robot_control</param>
+          <param name="node_namespace">${namespace}${model}</param>
+          <param name="robot_joints">${robot_joints}</param>
+          <param name="joint_1">${joint_1}</param>
+          <param name="joint_2">${joint_2}</param>
+          <param name="joint_3">${joint_3}</param>
+          <param name="joint_4">${joint_4}</param>
+          <param name="joint_5">${joint_5}</param>
+          <param name="joint_6">${joint_6}</param>
+          <param name="arm_group">${arm_group}</param>
+          <param name="send_format">${send_format}</param>
+          <param name="recv_format">${recv_format}</param>
+          <param name="controller_type">${controller_type}</param>
+          <param name="verbose">${verbose}</param>
+        </xacro:unless>
+      </hardware>
+
+      <xacro:denso_robot_control_limits namespace="$(arg namespace)" />
+    </ros2_control>
+  </xacro:macro>
+
+</robot>

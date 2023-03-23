@@ -1,0 +1,10 @@
+/**:
+  ros__parameters:
+    denso_conn_type: "tcp"
+    denso_ip_address: "192.168.0.10"
+    denso_port_number: 5007
+    denso_timeout: 3000
+    denso_retry_count: 5
+    denso_wait_time: 0
+    denso_watchdog_timer: 400
+    denso_invoke_timeout: 180000
