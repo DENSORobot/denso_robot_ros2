@@ -54,9 +54,9 @@ public:
   : node_(node), robotStatePublisher_(
       node_->create_publisher<moveit_msgs::msg::DisplayRobotState>("display_robot_state", 1))
   {
-    node_->declare_parameter("model");
-    node_->declare_parameter("scale_factor");
-    node_->declare_parameter("num_cycles");
+    node_->declare_parameter("model", "");
+    node_->declare_parameter("scale_factor", "");
+    node_->declare_parameter("num_cycles", "");
   }
 
   void run()

@@ -55,8 +55,8 @@ public:
   : node_(node), robotStatePublisher_(
       node_->create_publisher<moveit_msgs::msg::DisplayRobotState>("display_robot_state", 1))
   {
-    node_->declare_parameter("model");
-    node_->declare_parameter("scale_factor");
+    node_->declare_parameter("model", "cobotta");
+    node_->declare_parameter("scale_factor", "1.0");
   }
 
   void run()
