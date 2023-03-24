@@ -13,6 +13,9 @@
   <depend>hardware_interface</depend>
   <depend>pluginlib</depend>
   <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <depend>rclcpp_action</depend>
+  <depend>rclcpp_components</depend>
   
   <depend>bcap_core</depend>
   <depend>bcap_service</depend>
