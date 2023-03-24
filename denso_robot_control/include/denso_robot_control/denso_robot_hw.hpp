@@ -70,29 +70,23 @@ public:
 
   HRESULT Initialize();
 
-  status get_status() const override
-  {
-    return status_;
-  }
-
   std::string get_name() const override
   {
     return info_.name;
   }
 
-  return_type configure(const hardware_interface::HardwareInfo & info) override;
+  CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
-  return_type start() override;
-  return_type stop() override;
-  return_type read() override;
-  return_type write() override;
+  CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
+  CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
+  return_type read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
   void SpinNode(rclcpp::Node::SharedPtr& node, DensoRobotControl_Ptr drobo);
 
   HardwareInfo info_;
-  status status_;
   // Store the commands for the real robot
   std::vector<double> cmd_interface_;
   std::vector<double> pos_interface_;
