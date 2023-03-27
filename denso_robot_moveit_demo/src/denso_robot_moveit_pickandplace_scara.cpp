@@ -119,7 +119,7 @@ public:
       moveit::planning_interface::MoveGroupInterface::Plan movePlanHomeHsr065;
 
       bool successHomeHsr065 = (
-        moveGroup.plan(movePlanHomeHsr065) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+        moveGroup.plan(movePlanHomeHsr065) == moveit::core::MoveItErrorCode::SUCCESS);
       RCLCPP_INFO(
         kLogger, "***** Plan to Home (joint space goal) %s",
         successHomeHsr065 ? "SUCCEEDED" : "FAILED");
@@ -178,7 +178,7 @@ public:
       // Planning to Approach Position for Pick Operation
       moveGroup.setJointValueTarget(approachPickPos);
       bool success = (
-        moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+        moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
       RCLCPP_INFO(
         kLogger,
         "***** Plan to approach picking pose %s", success ? "SUCCEEDED" : "FAILED");
@@ -188,7 +188,7 @@ public:
       // Planning to Target Position for Pick Operation
       moveGroup.setJointValueTarget(targetPickPos);
       success = (
-        moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+        moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
       RCLCPP_INFO(
         kLogger,
         "***** Plan to target picking pose %s", success ? "SUCCEEDED" : "FAILED");
@@ -203,7 +203,7 @@ public:
       // Planning to Approach Position for Pick Operation
       moveGroup.setJointValueTarget(approachPickPos);
       success = (
-        moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+        moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
       RCLCPP_INFO(
         kLogger,
         "***** Plan to approach picking pose %s", success ? "SUCCEEDED" : "FAILED");
@@ -213,7 +213,7 @@ public:
       // Planning to Approach Position for Place Operation
       moveGroup.setJointValueTarget(approachPlacePos);
       success = (
-        moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+        moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
       RCLCPP_INFO(
         kLogger,
         "***** Plan to approach placing pose %s", success ? "SUCCEEDED" : "FAILED");
@@ -223,7 +223,7 @@ public:
       // Planning to Target Position for Place Operation
       moveGroup.setJointValueTarget(targetPlacePos);
       success = (
-        moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+        moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
       RCLCPP_INFO(
         kLogger, "***** Plan to target placing pose %s", success ? "SUCCEEDED" : "FAILED");
       // Moving to Target Position for Place Operation
@@ -237,7 +237,7 @@ public:
       // Planning to Approach Position for Place Operation
       moveGroup.setJointValueTarget(approachPlacePos);
       success = (
-        moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+        moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
       RCLCPP_INFO(
         kLogger,
         "***** Plan to approach placing pose %s", success ? "SUCCEEDED" : "FAILED");
