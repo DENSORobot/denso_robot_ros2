@@ -11,7 +11,11 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
   <build_depend>moveit_common</build_depend>
 
+  <!-- Specifies MoveIt! Libraries -->
+  <depend>moveit</depend>
   <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_ros_planners_ompl</depend>
+  <depend>moveit_simple_controller_manager</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

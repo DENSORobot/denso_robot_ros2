@@ -20,6 +20,9 @@ find_package(ament_cmake REQUIRED)
 find_package(hardware_interface REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(rclcpp_components REQUIRED)
 find_package(bcap_core REQUIRED)
 find_package(bcap_service REQUIRED)
 find_package(denso_robot_core REQUIRED)
@@ -34,6 +37,9 @@ set(
   hardware_interface
   pluginlib
   rclcpp
+  rclcpp_lifecycle
+  rclcpp_action
+  rclcpp_components
   std_msgs
   denso_robot_core
   bcap_core

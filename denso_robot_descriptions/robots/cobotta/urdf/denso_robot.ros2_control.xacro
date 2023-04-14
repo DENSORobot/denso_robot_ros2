@@ -18,7 +18,7 @@
 	<xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot_joint_limits.xacro" />
       <hardware>
         <xacro:if value="${sim}">
-      	  <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+          <plugin>ign_ros2_control/IgnitionSystem</plugin>
         </xacro:if>
         <xacro:unless value="${sim}">
           <plugin>denso_robot_control/DensoRobotHW</plugin>

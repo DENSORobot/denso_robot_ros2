@@ -56,7 +56,7 @@ int main(int argc, char** argv)
   node->declare_parameter("ip_address", "192.168.0.1");
   node->declare_parameter("controller_type", 8);
   node->declare_parameter("joints", 6);
-  node->declare_parameter("jointsType");
+  node->declare_parameter("jointsType", "");
   node->set_parameters({rclcpp::Parameter("jointsType", std::vector<int>({0}))});
   node->declare_parameter("armGroup", 0);
   node->declare_parameter("sendFormat", 0);
