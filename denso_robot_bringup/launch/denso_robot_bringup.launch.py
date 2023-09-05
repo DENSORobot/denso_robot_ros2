@@ -376,7 +376,7 @@ def generate_launch_description():
 # --------- Gazebo Nodes (only if 'sim:=true') ---------
     set_param_use_sim_time = SetParameter(
         name='use_sim_time', value=True,
-        condition=IfCondition(LaunchConfiguration('sim')))
+        condition=IfCondition(sim))
 
     world_file = os.path.join(
         get_package_share_directory('denso_robot_moveit_config'), 'worlds', 'empty.sdf')

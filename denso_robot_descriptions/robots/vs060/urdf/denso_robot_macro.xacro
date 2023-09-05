@@ -46,7 +46,7 @@
     <xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot.ros2_control.xacro" />
     <!-- ros2 control instance -->
     <xacro:denso_robot_ros2_control
-      name="GazeboSystem" namespace="$(arg namespace)"
+      name="IgnitionSystem" namespace="$(arg namespace)"
       sim="$(arg sim)"
       model="$(arg model)"
       ip_address="$(arg ip_address)"
@@ -72,10 +72,12 @@
     <xacro:denso_robot_arm_kinematics namespace="$(arg namespace)" model="$(arg model)" />
 
     <gazebo>
-	    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-      		<parameters>$(find denso_robot_moveit_config)/robots/$(arg model)/config/denso_robot_controllers.yaml</parameters>
-    	</plugin>
-  	</gazebo>
+      <plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin" >
+          <robot_param>robot_description</robot_param>
+          <robot_param_node>robot_state_publisher</robot_param_node>
+        <parameters>$(find denso_robot_moveit_config)/robots/$(arg model)/config/denso_robot_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
 
 
   </xacro:macro>

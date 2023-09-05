@@ -2,23 +2,23 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:macro name="denso_robot_ros2_control" params="name namespace
-	robot_name
+    robot_name
     sim:=false fake_sensor_commands:=false
     ip_address
     model
     robot_joints joint_1 joint_2 joint_3 joint_4
     arm_group
     send_format recv_format
-	controller_type
+    controller_type
     verbose
     ">
 
     <ros2_control name="${namespace}${name}" type="system">
-	<!-- joint limits include -->
-	<xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot_joint_limits.xacro" />
+  <!-- joint limits include -->
+  <xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot_joint_limits.xacro" />
       <hardware>
         <xacro:if value="${sim}">
-      	  <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+          <plugin>ign_ros2_control/IgnitionSystem</plugin>
         </xacro:if>
         <xacro:unless value="${sim}">
           <plugin>denso_robot_control/DensoRobotHW</plugin>
