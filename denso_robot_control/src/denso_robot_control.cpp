@@ -292,7 +292,7 @@ namespace denso_robot_control
     if (verbose_) {
       RCLCPP_INFO(rclcpp::get_logger(node_->get_name()), "[DEBUG] Changing to slave mode ...");
     }
-    hr = ChangeModeWithClearError(DensoRobot::SLVMODE_SYNC_WAIT | DensoRobot::SLVMODE_POSE_J);
+    hr = ChangeModeWithClearError(DensoRobot::SLVMODE_SYNC_WAIT | DensoRobot::SLVMODE_POSE_ASYNC_J);
     if (FAILED(hr)) {
       printErrorDescription(hr, "Failed to change to slave mode");
       return hr;

@@ -977,6 +977,9 @@ HRESULT DensoRobot::CreateSendParameter(
     case SLVMODE_POSE_T:
       joints = NUM_TRANS;
       break;
+    case SLVMODE_POSE_ASYNC_J:
+      joints = NUM_JOINT;
+      break;
     default:
       return E_FAIL;
   }
