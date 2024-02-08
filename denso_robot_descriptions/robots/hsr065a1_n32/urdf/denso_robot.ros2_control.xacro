@@ -14,8 +14,8 @@
     ">
 
     <ros2_control name="${namespace}${name}" type="system">
-  <!-- joint limits include -->
-  <xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot_joint_limits.xacro" />
+      <!-- joint limits include -->
+      <xacro:include filename="$(find denso_robot_descriptions)/robots/$(arg model)/urdf/denso_robot_joint_limits.xacro" />
       <hardware>
         <xacro:if value="${sim}">
           <plugin>ign_ros2_control/IgnitionSystem</plugin>
