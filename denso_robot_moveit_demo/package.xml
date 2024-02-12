@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>denso_robot_moveit_demo</name>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <description>The denso_robot_moveit_demo package includes an example node of how to control a DENSO robot using MoveIt2 motion planner.</description>
   <maintainer email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</maintainer>
   <license>MIT</license>

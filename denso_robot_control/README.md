@@ -24,13 +24,13 @@ When connecting to a real robot, please be sure to complete the steps for [robot
 The main launch file that starts the application is in the `denso_robot_bringup` package.
 
   - COBOTTA robot:
-	
+
    ```bash
    ros2 launch denso_robot_bringup denso_robot_bringup.launch.py model:=cobotta sim:=false ip_address:=192.168.0.1 send_format:=0 recv_format:=2
    ```
 
   - NOT COBOTTA robots (e.g. VS-060 robot):
-	
+
    ```bash
    ros2 launch denso_robot_bringup denso_robot_bringup.launch.py model:=vs060 sim:=false ip_address:=192.168.0.1 send_format:=256 recv_format:=258
    ```
@@ -44,13 +44,13 @@ The main launch file that starts the application is in the `denso_robot_bringup`
    ros2 launch denso_robot_bringup denso_robot_bringup.launch.py model:=<robot_model> sim:=false ip_address:=<robot_ip_address> send_format:=<send_format_value> recv_format:=<recv_format_value>
    ```
 
-The arguments for launch files can be listed using: 
+The arguments for launch files can be listed using:
 
    ```bash
    ros2 launch denso_robot_bringup denso_robot_bringup.launch.py --show-args
    ```
 
-The most relevant arguments are the following: 
+The most relevant arguments are the following:
 
   - `model` (**mandatory**) - the model of the DENSO robot (COBOTTA, VS-060, etc.). In the original DENSO ROS2 stack 2 robot models are already available ( _"cobotta"_ , _"vs060"_).
     To use other robot types, see the _ROS2Converter_ page (**under construction**) for creating the URDF model and the associated [MoveIt2](https://moveit.ros.org/) configuration package
@@ -154,7 +154,7 @@ The arguments for launch files can be listed using:
    ros2 launch denso_robot_moveit_demo denso_robot_moveit_pickandplace.launch.py --show-args
    ```
 
-The most relevant arguments are the following: 
+The most relevant arguments are the following:
 
    - `model` (**mandatory**) - the model of the DENSO robot (COBOTTA, VS-060, etc.). In the original DENSO ROS2 stack 2 robot models are already available ( _"cobotta"_ , _"vs060"_).
      To use other robot types, see the _ROS2Converter_ page (**under construction**) for creating the URDF model and the associated [MoveIt2](https://moveit.ros.org/) configuration package
@@ -176,14 +176,14 @@ The arguments for launch files can be listed using:
    ros2 launch denso_robot_moveit_demo denso_robot_moveit_pickandplace_scara.launch.py --show-args
    ```
 
-The most relevant arguments are the following: 
+The most relevant arguments are the following:
 
    - `model` (**mandatory**) - the model of the DENSO SCARA robot. Description files for SCARA robots (URDF model and associated [MoveIt2](https://moveit.ros.org/) configuration package) must be created using the _ROS2Converter Tool_ (**under construction**)
    - `scale_factor` (default: _0.1_) - motion speed \[0.01-1.0\]
    - `num_cycles` (default: _1_) - number of times to repeat the pick-and-place cycle
 
 
-#### Run the General Purpose MoveIt2 Demo 
+#### Run the General Purpose MoveIt2 Demo
 To launch the [MoveIt2](https://moveit.ros.org/) demo node run the following command:
 
    ```bash
@@ -196,7 +196,7 @@ The arguments for launch files can be listed using:
    ros2 launch denso_robot_moveit_demo denso_robot_moveit_demo.launch.py --show-args
    ```
 
-The most relevant arguments are the following: 
+The most relevant arguments are the following:
 
   - `model` (**mandatory**) - the model of the DENSO robot (COBOTTA, VS-060, etc.). In the original DENSO ROS2 stack 2 robot models are already available ( _"cobotta"_ , _"vs060"_).
     To use other robot types, see the _ROS2Converter_ page (**under construction**) for creating the URDF model and the associated [MoveIt2](https://moveit.ros.org/) configuration package
@@ -213,13 +213,13 @@ Topics used for reading and writing I/O lines are (in case of `model:=cobotta`, 
    ```
 
  - To read I/O lines:
- 
+
    ```bash
    ros2 topic echo /cobotta/Read_MiniIO
    ```
-	 
+
    Output will be (I/O lines are converted to UInt value):
-	 
+
    ```bash
    data: 6881280
    ---
@@ -228,13 +228,8 @@ Topics used for reading and writing I/O lines are (in case of `model:=cobotta`, 
    ```
 
  - To write I/O lines (I/O lines are converted to UInt value):
- 
+
    ```bash
    ros2 topic pub --once /cobotta/Write_MiniIO std_msgs/msg/UInt32 "data: 23658496"
    ```
-
-
-## How to Control Multiple Robotic Arms (Experimental)
-
-**under construction**
 

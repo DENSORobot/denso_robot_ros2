@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>denso_robot_description_installer</name>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <description>The denso_robot_description_installer package contains utilities for installing robot description and configuration files for DENSO robots (as created by the DENSO ROS2 Converter Tool).</description>
   <maintainer email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</maintainer>
   <license>MIT</license>

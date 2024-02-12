@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>denso_robot_core</name>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <description>The denso_robot_core package includes a node for controlling DENSO robot controllers.</description>
   <maintainer email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</maintainer>
   <license>MIT</license>
@@ -21,7 +21,7 @@
   <depend>rclcpp_components</depend>
   <exec_depend>rosidl_default_runtime</exec_depend>
   <member_of_group>rosidl_interface_packages</member_of_group>
-  
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 

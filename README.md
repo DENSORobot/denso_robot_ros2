@@ -52,8 +52,8 @@ To control other robot types, see the _ROS2Converter_ page (**under construction
 **Startup package:**
 
   - `denso_robot_bringup` - main launch files and configuration settings
-  
-  
+
+
 ## 3. Installation
 
 1. Install [ROS2 Foxy](https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html)
@@ -240,11 +240,3 @@ Three different control modalities can be selected for DENSO robots:
   - [b-CAP command interface](bcap_service/README.md)
   - [ORiN2 command interface](denso_robot_core/README.md)
   - [slaveMode robot control](denso_robot_control/README.md)
-
-
-## 6. Expected (Near) Future Developments
-
-- Connection to DENSO RC9 controllers
-- _ROS2Converter_ and _AcquireVelAcc_ tools for creating robot URDF desciption files and [MoveIt2](https://moveit.ros.org/) configuration files from Wincaps III software
-- Support for multiple robotic arms control in [slaveMode robot control](denso_robot_control/README.md)
-

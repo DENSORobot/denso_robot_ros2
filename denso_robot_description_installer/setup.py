@@ -4,7 +4,7 @@ package_name = 'denso_robot_description_installer'
 
 setup(
     name=package_name,
-    version='1.1.0',
+    version='1.1.1',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',

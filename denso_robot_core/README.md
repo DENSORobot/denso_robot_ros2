@@ -6,21 +6,24 @@ Considering robot motion, only the final target point is sent to the DENSO robot
 Motion planning and trajectory generation are internally managed by the DENSO controller (the final robot trajectory is not exposed to ROS2 nodes).
 
 
-Please refer to the [ORiN2 Programming Manual](http://eidtech.dyndns-at-work.com/support/RC8_Manual/img/001511/RC8_ProvGuide_en.pdf) for details about the available robot commands and their parameters.
+Please refer to the ORiN2 Programming Manual for details about the available robot commands and their parameters:
 
+  - [RC8 Provider User's Guide](https://www.fa-manuals.denso-wave.com/en/usermanuals/001511/)
+  - [RC9 Provider User's Guide](https://www.fa-manuals.denso-wave.com/en/RC9/010328/)
 
 ## Usage
 
 The main launch file that starts the ORiN2 node is in the `denso_robot_core` package.
 
   - COBOTTA robot:
-	
+
    ```bash
    ros2 launch denso_robot_core denso_robot_core.launch.py model:=cobotta ip_address:=192.168.0.1
    ```
 
+
   - NOT COBOTTA robot (e.g. VS-060 robot):
-	
+
    ```bash
    ros2 launch denso_robot_core denso_robot_core.launch.py model:=vs060 ip_address:=192.168.0.1
    ```
@@ -34,13 +37,13 @@ The main launch file that starts the ORiN2 node is in the `denso_robot_core` pac
    ros2 launch denso_robot_core denso_robot_core.launch.py model:=<robot_model> ip_address:=<robot_ip_address>
    ```
 
-The arguments for launch files can be listed using: 
+The arguments for launch files can be listed using:
 
    ```bash
    ros2 launch denso_robot_core denso_robot_core.launch.py --show-args
    ```
 
-The most relevant arguments are the following: 
+The most relevant arguments are the following:
 
   - `ip_address` (**mandatory**) - IP address of the robot
   - `controller_name` (default: _""_) - string that will be assigned to the ORiN2 Robot Controller Object
@@ -63,13 +66,13 @@ When setting e.g.  `model:=cobotta`, the name of the topics, actions and service
 **Run the following commands in a new Terminal**
 
  - Get the list of available topics:
- 
+
    ```bash
    ros2 topic list
    ```
-	 
+
    Output will be:
-	 
+
    ```bash
    [...]
 
@@ -133,41 +136,41 @@ When setting e.g.  `model:=cobotta`, the name of the topics, actions and service
 
 
  - Read robot speed:
- 
+
    ```bash
    ros2 topic echo /Arm0/EXTSPEED_Read
    ```
-   
-   
+
+
  - Write robot speed:
- 
+
    ```bash
    ros2 topic pub --once /Arm0/EXTSPEED_Write std_msgs/msg/Float32 "data: 100"
    ```
-   
-   
+
+
  - Read robot motor status:
- 
+
    ```bash
    ros2 topic echo /Arm0/SERVO_ON_Read
    ```
-   
-   
+
+
  - Write robot motor ON / OFF:
- 
+
    ```bash
    ros2 topic pub --once /Arm0/SERVO_ON_Write std_msgs/msg/Bool "data: False"
    ```
-   
-   
+
+
  - List of available actions:
- 
+
    ```bash
    ros2 action list
    ```
-	 
+
    Output will be:
-	 
+
    ```bash
    [...]
 
@@ -183,14 +186,14 @@ When setting e.g.  `model:=cobotta`, the name of the topics, actions and service
 
 
  - Move robot to position stored in controller's variable P\[1\]:
- 
+
    ```bash
    ros2 action send_goal /Arm0_MoveString denso_robot_core_interfaces/action/MoveString '{comp: 1, pose: "P1", option: ""}'
    ```
-   
-   
+
+
  - Read robot I/O lines (e.g. IO24):
- 
+
    ```bash
    ros2 topic pub --once /IO_ID std_msgs/msg/Int32 "data: 24"
    ros2 topic echo /IO_Read
@@ -198,15 +201,16 @@ When setting e.g.  `model:=cobotta`, the name of the topics, actions and service
 
 
  - Write robot I/O lines (e.g. IO24):
- 
+
    ```bash
    ros2 topic pub --once /IO_ID std_msgs/msg/Int32 "data: 24"
    ros2 topic pub --once /IO_Write std_msgs/msg/Bool "data: true"
    ros2 topic pub --once /IO_Write std_msgs/msg/Bool "data: false"
    ```
-   
 
-## How to Control Multiple Robotic Arms (Experimental)
 
-**under construction**
+## COBOTTA
 
+To execute CALSET on COBOTTA without TP, set "252: CALSET on start-up" to "1: DoNot". Then execute AutoCal Command.
+
+cf. [COBOTTA USER MANUAL ID:7299](https://www.fa-manuals.denso-wave.com/en/COBOTTA/007299/)
