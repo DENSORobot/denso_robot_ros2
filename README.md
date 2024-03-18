@@ -56,7 +56,7 @@ To control other robot types, see the _ROS2Converter_ page (**under construction
 
 ## 3. Installation
 
-1. Install [ROS2 Foxy](https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html)
+1. Install [ROS2 Humble](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
 
 2. Make sure that `colcon`, its extensions and `vcs` are installed:
 
@@ -79,13 +79,13 @@ To control other robot types, see the _ROS2Converter_ page (**under construction
    vcs import src --skip-existing --input src/denso_robot_drivers_ros2/denso_robot_drivers_ros2.repos
    ```
 
-5. To use [MoveIt2](https://moveit.ros.org/), install the [required packages (binary installation, Foxy version)](https://moveit.ros.org/install-moveit2/binary/).
+5. To use [MoveIt2](https://moveit.ros.org/), install the [required packages (binary installation, Humble version)](https://moveit.ros.org/install-moveit2/binary/).
 
 6. Install dependencies (if not already installed):
 
    ```bash
-   sudo apt install ros-foxy-ros2-control
-   sudo apt install ros-foxy-ros2-controllers
+   sudo apt install ros-humble-ros2-control
+   sudo apt install ros-humble-ros2-controllers
    ```
 
 7. Compile and source the workspace:

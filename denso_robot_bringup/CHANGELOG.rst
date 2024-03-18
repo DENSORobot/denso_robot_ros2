@@ -2,6 +2,10 @@
 Changelog for package denso_robot_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2024-03-15)
+------------------
+* Implemented support for ROS2 Humble
+
 1.1.1 (2024-02-09)
 ------------------
 

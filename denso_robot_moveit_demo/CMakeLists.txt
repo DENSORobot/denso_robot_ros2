@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 project(denso_robot_moveit_demo)
 
 # Common cmake code applied to all moveit packages
@@ -14,7 +14,6 @@ find_package(ament_cmake REQUIRED)
 find_package(moveit_common REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
 find_package(rosidl_default_runtime REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system)
 
 # This is the general demo
 add_executable(${PROJECT_NAME} src/${PROJECT_NAME}.cpp)

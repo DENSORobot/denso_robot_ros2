@@ -2,10 +2,10 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>denso_robot_bringup</name>
-  <version>1.1.1</version>
+  <version>1.2.0</version>
   <description>The denso_robot_bringup package contains the launch file and tools in order to control a DENSO robot by using MoveIt2.</description>
   <maintainer email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</maintainer>
-  <license>MIT</license>
+  <license>Apache2.0</license>
   <author email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -17,6 +17,15 @@
   <exec_depend>rviz2</exec_depend>
   <exec_depend>urdf</exec_depend>
   <exec_depend>xacro</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>static_transform_publisher</exec_depend>
+  <exec_depend>moveit_ros_move_group</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_ros2_control</exec_depend>
+  <exec_depend>denso_robot_control</exec_depend>
+  <exec_depend>denso_robot_descriptions</exec_depend>
+  <exec_depend>denso_robot_moveit_config</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

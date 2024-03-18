@@ -27,8 +27,6 @@
 
 #include <memory>
 #include <rclcpp/rclcpp.hpp>
-#include <boost/interprocess/smart_ptr/unique_ptr.hpp>
-#include <boost/interprocess/smart_ptr/shared_ptr.hpp>
 
 #include "variant_allocator.h"
 #include "visibility_control.h"
@@ -48,7 +46,7 @@ struct variant_deleter
   }
 };
 
-typedef boost::interprocess::unique_ptr<VARIANT, variant_deleter> VARIANT_Ptr;
+typedef std::unique_ptr<VARIANT, variant_deleter> VARIANT_Ptr;
 typedef std::vector<VARIANT, VariantAllocator<VARIANT> > VARIANT_Vec;
 
 namespace bcap_service {

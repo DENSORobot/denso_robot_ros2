@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 project(denso_robot_control)
 
 # Default to C99
@@ -6,39 +6,37 @@ if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 99)
 endif()
 
-# Default to C++14
+# Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-
-find_package(ament_cmake REQUIRED)
-find_package(hardware_interface REQUIRED)
-find_package(pluginlib REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(bcap_core REQUIRED)
-find_package(bcap_service REQUIRED)
-find_package(denso_robot_core REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(bcap_service_interfaces REQUIRED)
-find_package(denso_robot_core_interfaces REQUIRED)
-
-include_directories(include denso_robot_core hardware_interface)
-
 set(
   THIS_PACKAGE_INCLUDE_DEPENDS
   hardware_interface
   pluginlib
   rclcpp
+  rclcpp_action
+  rclcpp_components
+  rclcpp_lifecycle
   std_msgs
-  denso_robot_core
   bcap_core
+  bcap_service
   bcap_service_interfaces
+  denso_robot_core
   denso_robot_core_interfaces)
+
+# find dependencies
+find_package(ament_cmake REQUIRED)
+foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  find_package(${Dependency} REQUIRED)
+endforeach()
+
+include_directories(include denso_robot_core hardware_interface)
 
 add_library(
   ${PROJECT_NAME}_plugin
@@ -123,10 +121,8 @@ install(
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME}_plugin)
 ament_export_dependencies(
-  hardware_interface
-  pluginlib
-  rclcpp
-  ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  ${THIS_PACKAGE_INCLUDE_DEPENDS}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

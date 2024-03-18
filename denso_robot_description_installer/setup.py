@@ -4,7 +4,7 @@ package_name = 'denso_robot_description_installer'
 
 setup(
     name=package_name,
-    version='1.1.1',
+    version='1.2.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -19,7 +19,6 @@ setup(
     + ' installing robot description and configuration files for DENSO robots'\
     + ' (as created by the DENSO ROS2 Converter Tool).',
     license='MIT',
-    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
             'install_robot_description = denso_robot_description_installer.install_robot_description:main',

@@ -259,7 +259,6 @@ HRESULT DensoVariable::ExecGetValue(VARIANT_Ptr& value)
 HRESULT DensoVariable::ExecPutValue(const VARIANT_Ptr& value)
 {
   HRESULT hr;
-  int argc;
   VARIANT_Vec vntArgs;
   VARIANT_Ptr vntHandle(new VARIANT());
   VARIANT_Ptr vntRet(new VARIANT());
@@ -284,7 +283,6 @@ HRESULT DensoVariable::ExecPutValue(const VARIANT_Ptr& value)
 HRESULT DensoVariable::ExecPutID(const int id)
 {
   HRESULT hr;
-  int argc;
   VARIANT_Vec vntArgs;
   VARIANT_Ptr vntHandle(new VARIANT());
   VARIANT_Ptr vntValue(new VARIANT());

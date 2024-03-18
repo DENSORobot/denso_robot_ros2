@@ -42,7 +42,7 @@ int main(int argc, char** argv)
   std::string robot_name = "";
   std::string robot_model = "";
   std::string cobotta_model = "cobotta";
-  int ctrl_type;
+  int ctrl_type = 8;
   node->get_parameter("denso_ip_address", ip_address);
   node->get_parameter("denso_controller_type", ctrl_type);
   node->get_parameter("denso_robot_model", robot_model);

@@ -295,7 +295,8 @@ def generate_launch_description():
             moveit_controllers,
             moveit_controllers_file,
             occupancy_map_monitor_parameters,
-            planning_scene_monitor_parameters
+            planning_scene_monitor_parameters,
+            {'use_sim_time': sim}
         ])
 
 # --------- Robot Control Node (only if 'sim:=false') ---------
@@ -323,16 +324,17 @@ def generate_launch_description():
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='both',
-        parameters=[robot_description])
+        parameters=[{'use_sim_time': sim}, robot_description]
+    )
 
     joint_state_broadcaster_spawner = Node(
         package='controller_manager',
-        executable='spawner.py',
+        executable='spawner',
         arguments=['denso_joint_state_broadcaster', '--controller-manager', '/controller_manager'])
 
     robot_controller_spawner = Node(
         package='controller_manager',
-        executable='spawner.py',
+        executable='spawner',
         arguments=[robot_controller, '-c', '/controller_manager'])
 
 # TODO: do we need the Warehouse mongodb server ?
@@ -375,8 +377,8 @@ def generate_launch_description():
         name='static_transform_publisher',
         output='log',
         arguments=[
-            '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'world',
-            TextJoinSubstitution([namespace], 'base_link', '')
+            '--frame-id', 'world',
+            '--child-frame-id', TextJoinSubstitution([namespace], 'base_link', '')
         ])
 
 # --------- Gazebo Nodes (only if 'sim:=true') ---------

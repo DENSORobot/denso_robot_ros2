@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>bcap_service_interfaces</name>
-  <version>1.1.1</version>
+  <version>1.2.0</version>
   <description>The bcap_service_interfaces package defines the interfaces (topics) that will be used by the bcap_service node.</description>
   <maintainer email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</maintainer>
   <license>MIT</license>

@@ -96,7 +96,7 @@ HRESULT DensoControllerRC9::AddController()
 
 HRESULT DensoControllerRC9::AddRobot(XMLElement* xmlElem)
 {
-  int objs;
+  std::size_t objs;
   HRESULT hr;
 
   Name_Vec vecName;

@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>denso_robot_core_interfaces</name>
-  <version>1.1.1</version>
+  <version>1.2.0</version>
   <description>The denso_robot_core_interfaces defines the interfaces (topics and actions) that will be used by the denso_robot_core package.</description>
   <maintainer email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</maintainer>
   <license>MIT</license>

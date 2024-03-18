@@ -28,39 +28,6 @@
 
 #include "denso_robot_control/denso_robot_control.hpp"
 
-// // System
-// #include <memory>
-// #include <string>
-// #include <vector>
-// #include <limits>
-
-// #include <boost/thread.hpp>
-
-// // ros2_control hardware_interface
-// #include "hardware_interface/hardware_info.hpp"
-// #include "hardware_interface/system_interface.hpp"
-// #include "hardware_interface/types/hardware_interface_return_values.hpp"
-// #include "hardware_interface/types/hardware_interface_status_values.hpp"
-// #include "hardware_interface/visibility_control.h"
-// // ROS2
-// #include "rclcpp/macros.hpp"
-// // Message (std_msgs)
-// #include "std_msgs/msg/u_int32.hpp"
-// #include "std_msgs/msg/float64_multi_array.hpp"
-// // DENSO libraries
-// #include "denso_robot_core/denso_robot_core.h"
-// #include "denso_robot_core/denso_controller.h"
-// #include "denso_robot_core/denso_robot.h"
-// #include "denso_robot_core/denso_variable.h"
-// #include "denso_robot_core_interfaces/msg/user_io.hpp"
-
-// using hardware_interface::HardwareInfo;
-// using hardware_interface::return_type;
-// using hardware_interface::status;
-// using namespace std_msgs;
-// using namespace denso_robot_core;
-
-
 namespace denso_robot_control {
 
 class DensoRobotHW : public hardware_interface::SystemInterface
@@ -70,29 +37,18 @@ public:
 
   HRESULT Initialize();
 
-  status get_status() const override
-  {
-    return status_;
-  }
-
-  std::string get_name() const override
-  {
-    return info_.name;
-  }
-
-  return_type configure(const hardware_interface::HardwareInfo & info) override;
+  hardware_interface::CallbackReturn on_init(const hardware_interface::HardwareInfo & info) override;
   std::vector<hardware_interface::StateInterface> export_state_interfaces() override;
   std::vector<hardware_interface::CommandInterface> export_command_interfaces() override;
 
-  return_type start() override;
-  return_type stop() override;
-  return_type read() override;
-  return_type write() override;
+  hardware_interface::CallbackReturn on_activate(const rclcpp_lifecycle::State & previous_state) override;
+  hardware_interface::CallbackReturn on_deactivate(const rclcpp_lifecycle::State & previous_state) override;
+  hardware_interface::return_type read(const rclcpp::Time & time, const rclcpp::Duration & period) override;
+  hardware_interface::return_type write(const rclcpp::Time & time, const rclcpp::Duration & period) override;
 
   void SpinNode(rclcpp::Node::SharedPtr& node, DensoRobotControl_Ptr drobo);
 
   HardwareInfo info_;
-  status status_;
   // Store the commands for the real robot
   std::vector<double> cmd_interface_;
   std::vector<double> pos_interface_;

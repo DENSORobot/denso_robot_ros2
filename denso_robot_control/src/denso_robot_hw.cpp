@@ -28,8 +28,13 @@
 
 namespace denso_robot_control {
 
-return_type DensoRobotHW::configure(const hardware_interface::HardwareInfo & info)
+hardware_interface::CallbackReturn
+DensoRobotHW::on_init(const hardware_interface::HardwareInfo & info)
 {
+  if (hardware_interface::SystemInterface::on_init(info) != CallbackReturn::SUCCESS) {
+    return CallbackReturn::ERROR;
+  }
+
   info_ = info;
   pos_interface_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
   vel_interface_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
@@ -42,9 +47,9 @@ return_type DensoRobotHW::configure(const hardware_interface::HardwareInfo & inf
     if (joint.command_interfaces.size() != 2) {
       RCLCPP_FATAL(
         rclcpp::get_logger("DensoRobotHW"),
-        "Joint '%s' has %d command interfaces found. 2 expected (only 1 active).",
+        "Joint '%s' has %ld command interfaces found. 2 expected (only 1 active).",
         joint.name.c_str(), joint.command_interfaces.size());
-      return return_type::ERROR;
+      return CallbackReturn::ERROR;
     }
     if (joint.command_interfaces[0].name != hardware_interface::HW_IF_POSITION) {
       RCLCPP_FATAL(
@@ -52,16 +57,16 @@ return_type DensoRobotHW::configure(const hardware_interface::HardwareInfo & inf
         "Joint '%s' has %s command interfaces found. Expected %s.",
         joint.name.c_str(), joint.command_interfaces[0].name.c_str(),
         hardware_interface::HW_IF_POSITION);
-      return return_type::ERROR;
+      return CallbackReturn::ERROR;
     }
     // Denso robots allow three state interfaces on each joint
     // (POSITION, VELOCITY and EFFORT types)
     if (joint.state_interfaces.size() != 3) {
       RCLCPP_FATAL(
         rclcpp::get_logger("DensoRobotHW"),
-        "Joint '%s' has %d state interface. 3 expected.",
+        "Joint '%s' has %ld state interface. 3 expected.",
         joint.name.c_str(), joint.state_interfaces.size());
-      return return_type::ERROR;
+      return CallbackReturn::ERROR;
     }
     if (joint.state_interfaces[0].name != hardware_interface::HW_IF_POSITION) {
       RCLCPP_FATAL(
@@ -69,7 +74,7 @@ return_type DensoRobotHW::configure(const hardware_interface::HardwareInfo & inf
         "Joint '%s' has %s state interface as first state interface. '%s' expected.",
         joint.name.c_str(), joint.state_interfaces[0].name.c_str(),
         hardware_interface::HW_IF_POSITION);
-      return return_type::ERROR;
+      return CallbackReturn::ERROR;
     }
     if (joint.state_interfaces[1].name != hardware_interface::HW_IF_VELOCITY) {
       RCLCPP_FATAL(
@@ -77,7 +82,7 @@ return_type DensoRobotHW::configure(const hardware_interface::HardwareInfo & inf
         "Joint '%s' has %s state interface as second state interface. '%s' expected.",
         joint.name.c_str(), joint.state_interfaces[1].name.c_str(),
         hardware_interface::HW_IF_VELOCITY);
-      return return_type::ERROR;
+      return CallbackReturn::ERROR;
     }
     if (joint.state_interfaces[2].name != hardware_interface::HW_IF_EFFORT) {
       RCLCPP_FATAL(
@@ -85,13 +90,12 @@ return_type DensoRobotHW::configure(const hardware_interface::HardwareInfo & inf
         "Joint '%s' has %s state interface as third state interface. '%s' expected.",
         joint.name.c_str(), joint.state_interfaces[2].name.c_str(),
         hardware_interface::HW_IF_EFFORT);
-      return return_type::ERROR;
+      return CallbackReturn::ERROR;
     }
   }
 
-  status_ = hardware_interface::status::CONFIGURED;
   RCLCPP_INFO(rclcpp::get_logger("DensoRobotHW"), "***** Hardware configured !!");
-  return return_type::OK;
+  return CallbackReturn::SUCCESS;
 }
 
 std::vector<hardware_interface::StateInterface> DensoRobotHW::export_state_interfaces()
@@ -130,7 +134,8 @@ std::vector<hardware_interface::CommandInterface> DensoRobotHW::export_command_i
   return command_interfaces;
 }
 
-return_type DensoRobotHW::start()
+hardware_interface::CallbackReturn
+DensoRobotHW::on_activate(const rclcpp_lifecycle::State & /* previous_state */)
 {
   RCLCPP_INFO(rclcpp::get_logger("DensoRobotHW"), "Starting DENSO robot drivers ...");
   // TODO: do we really need this wait time ??
@@ -150,22 +155,22 @@ return_type DensoRobotHW::start()
   std::string node_namespace = info_.hardware_parameters["node_namespace"].c_str();
   std::string robot_ip_address = info_.hardware_parameters["ip_address"];
   std::string robot_name = info_.hardware_parameters["robot_name"];
-  int robot_joints = stoi(info_.hardware_parameters["robot_joints"]);
-  int ctrl_type = stoi(info_.hardware_parameters["controller_type"]);
+  int robot_joints = std::stoi(info_.hardware_parameters["robot_joints"]);
+  int ctrl_type = std::stoi(info_.hardware_parameters["controller_type"]);
 
   std::vector<int> joint_type;
   joint_type.resize(robot_joints);
   for (int i = 0; i < robot_joints; i++) {
     std::stringstream ss;
     ss << "joint_" << i + 1;
-    joint_type[i] = stoi(info_.hardware_parameters[ss.str()]);
+    joint_type[i] = std::stoi(info_.hardware_parameters[ss.str()]);
   }
 
   int arm_group = 0;
-  arm_group = stoi(info_.hardware_parameters["arm_group"]);
+  arm_group = std::stoi(info_.hardware_parameters["arm_group"]);
 
-  int send_format = stoi(info_.hardware_parameters["send_format"]);
-  int recv_format = stoi(info_.hardware_parameters["recv_format"]);
+  int send_format = std::stoi(info_.hardware_parameters["send_format"]);
+  int recv_format = std::stoi(info_.hardware_parameters["recv_format"]);
 
   bool verbose = false;
   std::string str_true = "True";
@@ -212,28 +217,29 @@ return_type DensoRobotHW::start()
   if (FAILED(hr)) {
     RCLCPP_FATAL(
       rclcpp::get_logger("DensoRobotHW"), "Failed to initialize real controller. (%X)", hr);
-    return return_type::ERROR;
+    return CallbackReturn::ERROR;
   }
 
   SpinNode(node, drobo_);
 
-  status_ = hardware_interface::status::STARTED;
   RCLCPP_INFO(rclcpp::get_logger("DensoRobotHW"), "System successfully started !!");
-  return return_type::OK;
+  return CallbackReturn::SUCCESS;
 }
 
-return_type DensoRobotHW::stop()
+hardware_interface::CallbackReturn
+DensoRobotHW::on_deactivate(const rclcpp_lifecycle::State & /* previous_state */)
 {
   RCLCPP_INFO(rclcpp::get_logger("DensoRobotHW"), "Stopping robot drivers... ");
   // TODO: do we really need this wait time ??
+  drobo_->Stop();
   std::this_thread::sleep_for(std::chrono::seconds(2));
 
-  status_ = hardware_interface::status::STOPPED;
   RCLCPP_INFO(rclcpp::get_logger("DensoRobotHW"), "System successfully stopped !!");
-  return return_type::OK;
+  return CallbackReturn::SUCCESS;
 }
 
-hardware_interface::return_type DensoRobotHW::read()
+hardware_interface::return_type DensoRobotHW::read(const rclcpp::Time & /* time */,
+                                                   const rclcpp::Duration & /* period */)
 {
   std::unique_lock<std::mutex> lock_mode(mtx_mode_);
   // read robot current position
@@ -241,7 +247,8 @@ hardware_interface::return_type DensoRobotHW::read()
   return return_type::OK;
 }
 
-hardware_interface::return_type DensoRobotHW::write()
+hardware_interface::return_type DensoRobotHW::write(const rclcpp::Time & /* time */,
+                                                    const rclcpp::Duration & /* period */)
 {
   std::unique_lock<std::mutex> lock_mode(mtx_mode_);
   drobo_->write(cmd_interface_);
@@ -259,6 +266,7 @@ void DensoRobotHW::SpinNode(rclcpp::Node::SharedPtr& node, DensoRobotControl_Ptr
       drobo->Update();
       loop_rate.sleep();
     }
+    rclcpp::shutdown();
   });
 
   denso_thread.detach();

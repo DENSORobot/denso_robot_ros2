@@ -25,7 +25,6 @@
 #ifndef DENSO_ROBOT_RC8_COBOTTA_H
 #define DENSO_ROBOT_RC8_COBOTTA_H
 
-#include <boost/thread.hpp>
 #include "denso_robot_core/denso_robot_rc8.h"
 
 namespace denso_robot_core {

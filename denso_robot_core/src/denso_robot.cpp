@@ -48,11 +48,12 @@ enum
 DensoRobot::DensoRobot(
   rclcpp::Node::SharedPtr& node, DensoBase* parent, Service_Vec& service, Handle_Vec& handle,
   const std::string& name, const int* mode)
-: DensoBase(parent, service, handle, name, mode), m_node(node), m_ArmGroup(0), m_curAct(ACT_RESET),
+: DensoBase(parent, service, handle, name, mode), m_ArmGroup(0), m_curAct(ACT_RESET),
   m_memTimeout(0), m_memRetry(0), m_tsfmt(0), m_timestamp(0), m_sendfmt(0), m_send_miniio(0),
   m_send_handio(0), m_recvfmt(0), m_recv_miniio(0), m_recv_handio(0),
   m_send_userio_offset(UserIO::MIN_USERIO_OFFSET), m_send_userio_size(1),
-  m_recv_userio_offset(UserIO::MIN_USERIO_OFFSET), m_recv_userio_size(1)
+  m_recv_userio_offset(UserIO::MIN_USERIO_OFFSET), m_recv_userio_size(1),
+  m_node(node)
 {
   m_tsfmt = TSFMT_MILLISEC;
 
@@ -368,7 +369,7 @@ HRESULT DensoRobot::ExecDrive(const std::string& name, const VARIANT_Ptr& option
 
     VariantInit(vntRet.get());
 
-    for (int argc = 0; argc < BCAP_ROBOT_EXECUTE_ARGS; argc++) {
+    for (argc = 0; argc < BCAP_ROBOT_EXECUTE_ARGS; argc++) {
       VARIANT_Ptr vntTmp(new VARIANT());
       VariantInit(vntTmp.get());
 
@@ -736,7 +737,7 @@ void DensoRobot::put_SendUserIO(const denso_robot_core_interfaces::msg::UserIO::
     return;
   }
 
-  if (value->size < value->value.size()) {
+  if (static_cast<std::size_t>(value->size) < value->value.size()) {
     ROS_WARN("User I/O size has to be equal or greater than the value length.");
     return;
   }
@@ -793,7 +794,7 @@ int DensoRobot::get_Timestamp() const
 HRESULT DensoRobot::CreatePoseData(
   const denso_robot_core_interfaces::msg::PoseData pose, VARIANT& vnt)
 {
-  uint32_t i, j;
+  uint32_t i;
   uint32_t num = 3 + (((pose.exjoints.mode != 0) && (pose.exjoints.joints.size() > 0)) ? 1 : 0);
   float* pfltval;
   VARIANT* pvntval;
@@ -834,7 +835,7 @@ HRESULT DensoRobot::CreatePoseData(
 HRESULT DensoRobot::CreateExJoints(
   const denso_robot_core_interfaces::msg::ExJoints exjoints, VARIANT& vnt)
 {
-  uint32_t i, j;
+  uint32_t i;
   uint32_t num = 1 + exjoints.joints.size();
   VARIANT *pvntval, *pjntval;
 
@@ -994,7 +995,7 @@ HRESULT DensoRobot::CreateSendParameter(
   send_uio = m_sendfmt & SENDFMT_USERIO;
 
   if (send_uio) {
-    if (send_userio_size < send_userio.size()) {
+    if (static_cast<std::size_t>(send_userio_size) < send_userio.size()) {
       return E_FAIL;
     }
   }
@@ -1098,7 +1099,8 @@ HRESULT DensoRobot::ParseRecvParameter(
   int type = m_recvfmt & SLVMODE_POSE;
 
   // Check pose type
-  int j = 0, j1 = 0, j2 = 0, joints = 0;
+  int j1 = 0, j2 = 0;
+  uint32_t joints = 0;
   std::vector<double>*pose1 = NULL, *pose2 = NULL;
 
   switch (type) {
@@ -1141,7 +1143,7 @@ HRESULT DensoRobot::ParseRecvParameter(
   recv_crt = m_recvfmt & RECVFMT_CURRENT;
 
   // Number of arguments
-  int num = 1 + recv_ts + recv_hio + recv_mio + recv_uio + recv_crt;
+  uint32_t num = 1 + recv_ts + recv_hio + recv_mio + recv_uio + recv_crt;
 
   HRESULT hr = S_OK;
   VARIANT* pvnt;
@@ -1271,9 +1273,8 @@ HRESULT DensoRobot::ParseRecvParameter(
 
 
 rclcpp_action::GoalResponse DensoRobot::Callback_MoveStringHandleGoal(
-  const rclcpp_action::GoalUUID & uuid, std::shared_ptr<const MoveString::Goal> goal)
+  const rclcpp_action::GoalUUID & /* uuid */, std::shared_ptr<const MoveString::Goal> /* goal */)
 {
-  (void)uuid;
   return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
 }
 
@@ -1281,7 +1282,6 @@ rclcpp_action::CancelResponse DensoRobot::Callback_MoveStringHandleCancel(
   const std::shared_ptr<GoalHandleMoveString> goal_handle)
 {
   auto res = std::make_shared<MoveString::Result>();
-  (void)goal_handle;
 
   this->ExecHalt();
   this->m_curAct = ACT_NONE;
@@ -1340,9 +1340,8 @@ void DensoRobot::Callback_MoveString(const std::shared_ptr<GoalHandleMoveString>
 }
 
 rclcpp_action::GoalResponse DensoRobot::Callback_MoveValueHandleGoal(
-  const rclcpp_action::GoalUUID & uuid, std::shared_ptr<const MoveValue::Goal> goal)
+  const rclcpp_action::GoalUUID & /* uuid */, std::shared_ptr<const MoveValue::Goal> /* goal */)
 {
-  (void)uuid;
   return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
 }
 
@@ -1350,7 +1349,6 @@ rclcpp_action::CancelResponse DensoRobot::Callback_MoveValueHandleCancel(
   const std::shared_ptr<GoalHandleMoveValue> goal_handle)
 {
   auto res = std::make_shared<MoveValue::Result>();
-  (void)goal_handle;
 
   this->ExecHalt();
   this->m_curAct = ACT_NONE;
@@ -1409,9 +1407,8 @@ void DensoRobot::Callback_MoveValue(
 }
 
 rclcpp_action::GoalResponse DensoRobot::Callback_DriveStringHandleGoal(
-  const rclcpp_action::GoalUUID & uuid, std::shared_ptr<const DriveString::Goal> goal)
+  const rclcpp_action::GoalUUID & /* uuid */, std::shared_ptr<const DriveString::Goal> /* goal */)
 {
-  (void)uuid;
   return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
 }
 
@@ -1419,7 +1416,6 @@ rclcpp_action::CancelResponse DensoRobot::Callback_DriveStringHandleCancel(
   const std::shared_ptr<GoalHandleDriveString> goal_handle)
 {
   auto res = std::make_shared<DriveString::Result>();
-  (void)goal_handle;
 
   this->ExecHalt();
   this->m_curAct = ACT_NONE;
@@ -1609,9 +1605,8 @@ void DensoRobot::Callback_DriveAExString(
 
 
 rclcpp_action::GoalResponse DensoRobot::Callback_DriveValueHandleGoal(
-  const rclcpp_action::GoalUUID & uuid, std::shared_ptr<const DriveValue::Goal> goal)
+  const rclcpp_action::GoalUUID & /* uuid */, std::shared_ptr<const DriveValue::Goal> /* goal */)
 {
-  (void)uuid;
   return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
 }
 
@@ -1619,7 +1614,6 @@ rclcpp_action::CancelResponse DensoRobot::Callback_DriveValueHandleCancel(
   const std::shared_ptr<GoalHandleDriveValue> goal_handle)
 {
   auto res = std::make_shared<DriveValue::Result>();
-  (void)goal_handle;
 
   this->ExecHalt();
   this->m_curAct = ACT_NONE;
@@ -1680,7 +1674,7 @@ void DensoRobot::Callback_DriveValue(
 
   SafeArrayAccessData(pvntval[0].parray, (void**)&pvntjnt);
 
-  for (int i = 0; i < goal->pose.size(); i++) {
+  for (std::size_t i = 0; i < goal->pose.size(); i++) {
     denso_robot_core_interfaces::msg::PoseData pd;
     pd.value.push_back(goal->pose.at(i).joint);
     pd.value.push_back(goal->pose.at(i).value);
@@ -1755,7 +1749,7 @@ void DensoRobot::Callback_DriveExValue(const std::shared_ptr<GoalHandleDriveValu
 
   SafeArrayAccessData(pvntval[0].parray, (void**)&pvntjnt);
 
-  for (int i = 0; i < goal->pose.size(); i++) {
+  for (std::size_t i = 0; i < goal->pose.size(); i++) {
     denso_robot_core_interfaces::msg::PoseData pd;
     pd.value.push_back(goal->pose.at(i).joint);
     pd.value.push_back(goal->pose.at(i).value);
@@ -1832,7 +1826,7 @@ void DensoRobot::Callback_DriveAExValue(
 
   SafeArrayAccessData(pvntval[0].parray, (void**)&pvntjnt);
 
-  for (int i = 0; i < goal->pose.size(); i++) {
+  for (std::size_t i = 0; i < goal->pose.size(); i++) {
     denso_robot_core_interfaces::msg::PoseData pd;
     pd.value.push_back(goal->pose.at(i).joint);
     pd.value.push_back(goal->pose.at(i).value);

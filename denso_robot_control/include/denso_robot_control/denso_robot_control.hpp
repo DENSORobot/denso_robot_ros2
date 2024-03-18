@@ -31,13 +31,11 @@
 #include <vector>
 #include <limits>
 
-#include <boost/thread.hpp>
-
 // ros2_control hardware_interface
 #include "hardware_interface/hardware_info.hpp"
 #include "hardware_interface/system_interface.hpp"
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
-#include "hardware_interface/types/hardware_interface_status_values.hpp"
+#include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "hardware_interface/visibility_control.h"
 // ROS
 #include "rclcpp/macros.hpp"
@@ -56,7 +54,6 @@ using namespace denso_robot_core;
 using namespace std_msgs;
 using hardware_interface::HardwareInfo;
 using hardware_interface::return_type;
-using hardware_interface::status;
 
 #define JOINT_MAX (8)
 

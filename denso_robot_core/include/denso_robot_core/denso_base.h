@@ -26,7 +26,6 @@
 #define DENSO_BASE_H
 
 #include "denso_robot_core/visibility_control.h"
-#include "denso_robot_core/visibility_control.h"
 #include "denso_robot_core/tinyxml2.h"
 
 #include <mutex>

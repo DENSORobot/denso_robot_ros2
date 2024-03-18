@@ -47,6 +47,7 @@ static const std::string kPlanningGroup = "arm";
 static const std::string kRobotNameCobotta = "cobotta";
 static const std::string kRobotNameVs060 = "vs060";
 static const std::string kRobotNameHsr065 = "hsr065";
+static const double kScaleFactor = 0.1;
 
 class DensoRobotCppDemo
 {
@@ -55,15 +56,15 @@ public:
   : node_(node), robotStatePublisher_(
       node_->create_publisher<moveit_msgs::msg::DisplayRobotState>("display_robot_state", 1))
   {
-    node_->declare_parameter("model");
-    node_->declare_parameter("scale_factor");
+    node_->declare_parameter("model", kRobotNameVs060);
+    node_->declare_parameter("scale_factor", kScaleFactor);
   }
 
   void run()
   {
     RCLCPP_INFO(kLogger, "***** Initializing DensoRobotCppDemo ...");
     if(!node_->get_parameter("scale_factor", scaleFactor_)) {
-      scaleFactor_ = 0.1;
+      scaleFactor_ = kScaleFactor;
     }
     RCLCPP_INFO(kLogger, "***** DensoRobotCppDemo - Scale factor: %.2f", scaleFactor_);
 
@@ -116,7 +117,7 @@ public:
       moveit::planning_interface::MoveGroupInterface::Plan movePlanHomeCobotta;
 
       bool successHomeCobotta = (
-        moveGroup.plan(movePlanHomeCobotta) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+        moveGroup.plan(movePlanHomeCobotta) == moveit::core::MoveItErrorCode::SUCCESS);
       RCLCPP_INFO(
         kLogger, "***** Plan to Home (joint space goal) %s",
         successHomeCobotta ? "SUCCEEDED" : "FAILED");
@@ -204,7 +205,7 @@ public:
         moveit::planning_interface::MoveGroupInterface::Plan movePlanHomeVs060;
 
         bool successHomeVs060 = (
-          moveGroup.plan(movePlanHomeVs060) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+            moveGroup.plan(movePlanHomeVs060) == moveit::core::MoveItErrorCode::SUCCESS);
         RCLCPP_INFO(
           kLogger, "***** Plan to Home (joint space goal) %s",
           successHomeVs060 ? "SUCCEEDED" : "FAILED");
@@ -298,7 +299,7 @@ public:
           moveit::planning_interface::MoveGroupInterface::Plan movePlanHomeHsr065;
 
           bool successHomeHsr065 = (
-            moveGroup.plan(movePlanHomeHsr065) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+            moveGroup.plan(movePlanHomeHsr065) == moveit::core::MoveItErrorCode::SUCCESS);
           RCLCPP_INFO(
             kLogger, "***** Plan to Home (joint space goal) %s",
             successHomeHsr065 ? "SUCCEEDED" : "FAILED");
@@ -381,56 +382,56 @@ public:
     // Planning to Pose goal #0
     moveGroup.setPoseTarget(targetPos0);
     bool success = (
-      moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+      moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
     RCLCPP_INFO(kLogger, "***** Plan to pose goal #0 %s", success ? "SUCCEEDED" : "FAILED");
     // Moving to pose goal #0
     moveGroup.move();
 
     // Planning to Pose goal #1
     moveGroup.setPoseTarget(targetPos1);
-    success = (moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    success = (moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
     RCLCPP_INFO(kLogger, "***** Plan to pose goal #1 %s", success ? "SUCCEEDED" : "FAILED");
     // Moving to pose goal #1
     moveGroup.move();
 
     // Planning to Pose goal #2
     moveGroup.setPoseTarget(targetPos2);
-    success = (moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    success = (moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
     RCLCPP_INFO(kLogger, "***** Plan to pose goal #2 %s", success ? "SUCCEEDED" : "FAILED");
     // Moving to pose goal #2
     moveGroup.move();
 
     // Planning to a Pose goal #3
     moveGroup.setPoseTarget(targetPos3);
-    success = (moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    success = (moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
     RCLCPP_INFO(kLogger, "***** Plan to pose goal #3 %s", success ? "SUCCEEDED" : "FAILED");
     // Moving to a pose goal #3
     moveGroup.move();
 
     // Planning to a Pose goal #4
     moveGroup.setPoseTarget(targetPos4);
-    success = (moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    success = (moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
     RCLCPP_INFO(kLogger, "***** Plan to pose goal #4 %s", success ? "SUCCEEDED" : "FAILED");
     // Moving to a pose goal #4
     moveGroup.move();
 
     // Planning to a Pose goal #5
     moveGroup.setPoseTarget(targetPos5);
-    success = (moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    success = (moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
     RCLCPP_INFO(kLogger, "***** Plan to pose goal #5 %s", success ? "SUCCEEDED" : "FAILED");
     // Moving to a pose goal #5
     moveGroup.move();
 
     // Planning to a Pose goal #6
     moveGroup.setPoseTarget(targetPos6);
-    success = (moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    success = (moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
     RCLCPP_INFO(kLogger, "***** Plan to pose goal #6 %s", success ? "SUCCEEDED" : "FAILED");
     // Moving to a pose goal #6
     moveGroup.move();
 
     // Planning to a Pose goal #7
     moveGroup.setPoseTarget(targetPos7);
-    success = (moveGroup.plan(movePlan) == moveit::planning_interface::MoveItErrorCode::SUCCESS);
+    success = (moveGroup.plan(movePlan) == moveit::core::MoveItErrorCode::SUCCESS);
     RCLCPP_INFO(kLogger, "***** Plan to pose goal #7 %s", success ? "SUCCEEDED" : "FAILED");
     // Moving to a pose goal #7
     moveGroup.move();

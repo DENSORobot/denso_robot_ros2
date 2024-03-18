@@ -32,7 +32,7 @@ Version MIN_VERSION("2.8.0");
 
 HRESULT DensoControllerRC8Cobotta::AddRobot(XMLElement * xmlElem)
 {
-  int objs;
+  std::size_t objs;
   HRESULT hr;
   Name_Vec vecName;
 
@@ -90,7 +90,7 @@ HRESULT DensoControllerRC8Cobotta::ExecClearError()
   Version currVersion(m_ctrlVer);
 
   if (MIN_VERSION > currVersion) {
-    return hr;
+    return S_OK;
   }
 
   hr = this->get_Robot(0, &pRob);
@@ -124,7 +124,7 @@ HRESULT DensoControllerRC8Cobotta::ExecResetStoState()
   Version currVersion(m_ctrlVer);
 
   if (MIN_VERSION > currVersion) {
-    return hr;
+    return S_OK;
   }
 
   hr = this->get_Robot(0, &pRob);

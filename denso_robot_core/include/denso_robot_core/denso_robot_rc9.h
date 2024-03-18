@@ -25,7 +25,6 @@
 #ifndef DENSO_ROBOT_RC9_H
 #define DENSO_ROBOT_RC9_H
 
-#include <boost/thread.hpp>
 #include "denso_robot_core/denso_robot.h"
 
 namespace denso_robot_core {
