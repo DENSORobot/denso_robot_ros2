@@ -5,7 +5,7 @@
   <version>1.1.1</version>
   <description>The denso_robot_bringup package contains the launch file and tools in order to control a DENSO robot by using MoveIt2.</description>
   <maintainer email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</maintainer>
-  <license>MIT</license>
+  <license>Apache2.0</license>
   <author email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

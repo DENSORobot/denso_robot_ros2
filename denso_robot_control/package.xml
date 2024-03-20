@@ -6,6 +6,7 @@
   <description>The denso_robot_control package contains a MoveIt2 plugin for controlling DENSO robots.</description>
   <maintainer email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</maintainer>
   <license>MIT</license>
+  <license>Apache2.0</license>
   <author email="fa-support@denso-wave.com">DENSO WAVE INCORPORATED</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
