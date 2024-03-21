@@ -19,7 +19,6 @@
   <exec_depend>xacro</exec_depend>
   <exec_depend>joint_state_broadcaster</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
-  <exec_depend>static_transform_publisher</exec_depend>
   <exec_depend>moveit_ros_move_group</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>gazebo_ros2_control</exec_depend>
