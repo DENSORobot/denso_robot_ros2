@@ -1,0 +1,5 @@
+uint8 value  # 0 = fully closed, 30 = fully open
+uint8 speed # 0-100 speed percentage
+---
+bool success
+string message

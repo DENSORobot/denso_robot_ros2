@@ -87,6 +87,11 @@ ament_target_dependencies(
 
 pluginlib_export_plugin_description_file(hardware_interface denso_hardware_interface_plugin.xml)
 
+add_executable(denso_gripper_control_node src/denso_gripper_control.cpp)
+ament_target_dependencies(
+  denso_gripper_control_node
+  ${THIS_PACKAGE_INCLUDE_DEPENDS})
+
 
 #=============
 # Install
@@ -113,6 +118,10 @@ install(
   RUNTIME DESTINATION lib/${PROJECT_NAME}
   INCLUDES DESTINATION include)
 
+install(TARGETS
+  denso_gripper_control_node
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 #=============
 # Export

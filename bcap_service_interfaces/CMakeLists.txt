@@ -25,7 +25,8 @@ find_package(rclcpp REQUIRED)
 rosidl_generate_interfaces(
   ${PROJECT_NAME}
   "msg/Variant.msg"
-  "srv/Bcap.srv")
+  "srv/Bcap.srv"
+  "srv/Gripper.srv")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
